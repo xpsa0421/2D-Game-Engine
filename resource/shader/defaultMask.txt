@@ -1,0 +1,43 @@
+struct VS_in
+{
+	float3 p : POSITION;
+	float4 color : COLOR;
+	float2 tex : TEXTURE;
+};
+struct VS_out
+{
+	float4 p : SV_POSITION;
+	float4 c : COLOR0;
+	float2 t : TEXCOORD0;
+};
+VS_out VSMain(VS_in input) 
+{
+	VS_out output = (VS_out)0;
+	output.p = float4(input.p,1.0f); 
+	output.c = input.color;
+	output.t = input.tex;
+	return output;
+}
+
+Texture2D    g_texA		: register(t0);
+Texture2D    g_texMaskA		: register(t1);
+SamplerState g_sampleWrap	: register(s0);
+
+struct PS_input
+{
+	float4 p : SV_POSITION;
+	float4 c : COLOR0; 
+	float2 t : TEXCOORD0; 
+};
+
+float4 PSMain(	PS_input input) : SV_Target
+{
+	float4 color = g_texA.Sample(g_sampleWrap , input.t);	
+	float4 mask  = g_texMaskA.Sample(g_sampleWrap , input.t);
+	float4 outputColor = color;
+	if( mask.r > 0.5f)
+	{
+		discard;
+	}	
+	return outputColor;
+}

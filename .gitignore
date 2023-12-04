@@ -1,0 +1,10 @@
+# Visual Studio Files
+.vs/
+*.sln
+*.vcxproj
+
+# Output Files
+/output/
+
+# Unused Resources
+/resource/extra_rsrc/
