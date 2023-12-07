@@ -14,5 +14,8 @@ A 2D Game Engine developed with C++ and DirectX.
 * Sound using FMOD
 * Displaying text
 
-## Projects Developed With This Engine
+## Projects Developed With This Engine  
+_Click the image to redirect to the project repository_  
+
 [<img alt="Slime Heroes" width="400px" src="https://github.com/xpsa0421/2D-Game-Engine/assets/71711432/14db928f-886a-40dc-8751-d1e7ead1b215" />](https://github.com/xpsa0421/Slime-Heroes)
+[<img alt="Slime Heroes" width="420px" src="https://github.com/xpsa0421/2D-Game-Engine/assets/71711432/aab055d5-f17d-4e87-bbe9-a18d9a70002a" />](https://github.com/xpsa0421/EffectTool)
