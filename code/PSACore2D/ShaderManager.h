@@ -20,4 +20,3 @@ private:
 public:
 	~ShaderManager();
 };
-

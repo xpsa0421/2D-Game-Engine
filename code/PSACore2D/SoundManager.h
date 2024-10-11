@@ -7,6 +7,7 @@ class SoundManager : public Singleton<SoundManager>
 {
 private:
 	friend class Singleton<SoundManager>;
+public:
 	FMOD::System* _system = nullptr;
 private:
 	std::list<std::wstring>			_filePaths;
@@ -26,4 +27,3 @@ private:
 public:
 	~SoundManager();
 };
-

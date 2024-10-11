@@ -1,20 +1,5 @@
 #include "Shader.h"
 
-bool Shader::Init()
-{
-	return true;
-}
-
-bool Shader::Frame()
-{
-	return true;
-}
-
-bool Shader::Render()
-{
-	return true;
-}
-
 bool Shader::Release()
 {
 	if (_vertexShader)	_vertexShader->Release();
@@ -25,17 +10,17 @@ bool Shader::Release()
 	if (_PSCodeNoTexture)		_PSCode->Release();
 
 	_pixelShaderNoTexture = nullptr;
-	_pixelShader	= nullptr;
-	_vertexShader	= nullptr;
-	_VSCode			= nullptr;
-	_PSCode			= nullptr;
+	_pixelShader = nullptr;
+	_vertexShader = nullptr;
+	_VSCode = nullptr;
+	_PSCode = nullptr;
 	_PSCodeNoTexture = nullptr;
 
 	return true;
 }
 
 HRESULT Shader::Create(
-		ID3D11Device* device, ID3D11DeviceContext* immediateContext, W_STR shaderFileName)
+	ID3D11Device* device, ID3D11DeviceContext* immediateContext, W_STR shaderFileName)
 {
 	_device = device;
 	_immediateContext = immediateContext;

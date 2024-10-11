@@ -1,6 +1,6 @@
 #include "GameCore.h"
 
-bool		GameCore::CoreInit()
+bool GameCore::CoreInit()
 {
 	Device::Init();
 	DxState::SetState(_device);
@@ -18,7 +18,7 @@ bool		GameCore::CoreInit()
     return Init();
 }
 
-bool		GameCore::CoreFrame()
+bool GameCore::CoreFrame()
 {
 	S_SoundManager.Frame();
 	S_Input.Frame();
@@ -28,17 +28,17 @@ bool		GameCore::CoreFrame()
     return Frame();
 }
 
-bool		GameCore::CorePreRender()
+bool GameCore::CorePreRender()
 {
 	float color[4] = { 1.0f,1.0f,1.0f,1.0f };
 	_immediateContext->OMSetRenderTargets(1, &_rtv, NULL);
 	_immediateContext->ClearRenderTargetView(_rtv, color);
-	_immediateContext->PSSetSamplers(0, 1, &DxState::g_defaultSS);
-	_immediateContext->OMSetBlendState(DxState::g_defaultBS, 0, -1);
+	_immediateContext->PSSetSamplers(0, 1, &DxState::g_SSDefault);
+	_immediateContext->OMSetBlendState(DxState::g_BSDefault, 0, -1);
     return true;
 }
 
-bool		GameCore::CoreRender()
+bool GameCore::CoreRender()
 {  	
 	CorePreRender();
 	Render();
@@ -52,13 +52,13 @@ bool		GameCore::CoreRender()
     return true;
 }
 
-bool		GameCore::CorePostRender()
+bool GameCore::CorePostRender()
 {
 	_swapChain->Present(0, 0);
     return true;
 }
 
-bool		GameCore::CoreRelease()
+bool GameCore::CoreRelease()
 {   
 	_backBuffer->Release();
 	Release();
@@ -71,7 +71,7 @@ bool		GameCore::CoreRelease()
     return true;
 }
 
-bool        GameCore::Run()
+bool GameCore::Run()
 {    
 	CoreInit();	
 	while (_isGameRun)

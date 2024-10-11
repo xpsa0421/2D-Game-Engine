@@ -1,7 +1,7 @@
 #include "DxState.h"
-ID3D11SamplerState* DxState::g_defaultSS = nullptr;
+ID3D11SamplerState* DxState::g_SSDefault = nullptr;
 ID3D11SamplerState* DxState::g_SSSmooth = nullptr;
-ID3D11BlendState*	DxState::g_defaultBS = nullptr;
+ID3D11BlendState*	DxState::g_BSDefault = nullptr;
 
 bool DxState::SetState(ID3D11Device* device)
 {
@@ -11,7 +11,7 @@ bool DxState::SetState(ID3D11Device* device)
     samplerDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
     samplerDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
-    device->CreateSamplerState(&samplerDesc, &g_defaultSS);
+    device->CreateSamplerState(&samplerDesc, &g_SSDefault);
 
     samplerDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
     device->CreateSamplerState(&samplerDesc, &g_SSSmooth);
@@ -26,7 +26,7 @@ bool DxState::SetState(ID3D11Device* device)
     blendDesc.RenderTarget[0].DestBlendAlpha = D3D11_BLEND_ZERO;
     blendDesc.RenderTarget[0].BlendOpAlpha = D3D11_BLEND_OP_ADD;
     blendDesc.RenderTarget[0].RenderTargetWriteMask = D3D11_COLOR_WRITE_ENABLE_ALL;
-    device->CreateBlendState(&blendDesc, &g_defaultBS);
+    device->CreateBlendState(&blendDesc, &g_BSDefault);
 
     return true;
 }
@@ -34,7 +34,7 @@ bool DxState::SetState(ID3D11Device* device)
 bool DxState::Release()
 {
     if (g_SSSmooth)     g_SSSmooth->Release();
-    if (g_defaultSS)    g_defaultSS->Release();
-    if (g_defaultBS)    g_defaultBS->Release();
+    if (g_SSDefault)    g_SSDefault->Release();
+    if (g_BSDefault)    g_BSDefault->Release();
     return true;
 }

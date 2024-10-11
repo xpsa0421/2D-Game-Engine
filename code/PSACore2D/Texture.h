@@ -15,7 +15,6 @@ public:
 	D3D11_TEXTURE2D_DESC		_desc;
 public:
 	HRESULT	Create(ID3D11Device* device, ID3D11DeviceContext* immediateContext, std::wstring fileName);
-	void	Apply(ID3D11DeviceContext* immediateContext, UINT slot = 0);
+	void	Apply(UINT slot = 0);
 	bool	Release();
 };
-

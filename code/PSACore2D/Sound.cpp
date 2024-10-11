@@ -1,4 +1,5 @@
 #include "Sound.h"
+#include "SoundManager.h"
 
 bool Sound::IsPlaying()
 {
@@ -11,7 +12,7 @@ bool Sound::StartPlay(bool isLooped)
 {
 	if (!IsPlaying())
 	{
-		FMOD_RESULT result = _system->playSound(
+		FMOD_RESULT result = S_SoundManager._system->playSound(
 			_sound, nullptr, false, &_channel
 		);
 		if (result == FMOD_OK)
@@ -59,22 +60,15 @@ void Sound::SetLoop(bool isLooped)
 		_sound->setMode(FMOD_LOOP_OFF);
 }
 
-bool Sound::Load(FMOD::System* system, W_STR fileName)
+bool Sound::Load(W_STR fileName)
 {
-	_system = system;
-	FMOD_RESULT result = _system->createSound(
-		wtm(fileName).c_str(),
-		FMOD_DEFAULT, nullptr, &_sound);
+	FMOD_RESULT result = S_SoundManager._system->createSound(
+		wtm(fileName).c_str(), FMOD_DEFAULT, nullptr, &_sound);
 
 	if (result == FMOD_OK)
 	{
 		_sound->getLength(&_length, FMOD_TIMEUNIT_MS);
 	}
-	return true;
-}
-
-bool Sound::Init()
-{
 	return true;
 }
 
@@ -96,11 +90,6 @@ bool Sound::Frame()
 		);
 		_buffer = buffer;
 	}
-	return true;
-}
-
-bool Sound::Render()
-{
 	return true;
 }
 

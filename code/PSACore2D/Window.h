@@ -27,5 +27,4 @@ public:
 public:
 	Window();
 };
-
                                                        

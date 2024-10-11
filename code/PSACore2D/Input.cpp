@@ -1,6 +1,6 @@
 #include "Input.h"
 
-DWORD Input::GetKey(DWORD key)
+DWORD Input::GetKeyState(DWORD key)
 {
 	return _keyStates[key];
 }

@@ -4,7 +4,7 @@
 
 enum KeyState
 {
-	KEY_FREE = 0,
+	KEY_FREE,
 	KEY_UP,
 	KEY_DOWN,
 	KEY_HOLD
@@ -18,12 +18,12 @@ public:
 	POINT	_mousePos;
 	bool	_keyPressed;
 public:
-	virtual bool	Init();
-	virtual bool	Frame();
-	virtual bool	Render();
-	virtual bool	Release();
+	bool	Init();
+	bool	Frame();
+	bool	Render();
+	bool	Release();
 public:
 	bool	IsAnyKeyPressed();
-	DWORD	GetKey(DWORD key);
+	DWORD	GetKeyState(DWORD key);
 };
 

@@ -9,4 +9,3 @@ public:
 	void			SetSize(Vector2 size);
 	virtual void	UpdateVertexBuffer()	override;
 };
-

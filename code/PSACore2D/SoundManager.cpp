@@ -40,7 +40,7 @@ Sound* SoundManager::LoadSound(W_STR filePath)
 	{
 		Sound* sound = new Sound;
 		sound->_name = filePath;
-		HRESULT result = sound->Load(_system, filePath);
+		HRESULT result = sound->Load(filePath);
 		if (SUCCEEDED(result))
 			_sounds.insert(std::make_pair(fileName, sound));
 		return sound;

@@ -13,9 +13,8 @@ private:
 public:
 	UINT	_FPS;
 public:
-	virtual bool	Init();
-	virtual bool	Frame();
-	virtual bool	Render();
-	virtual bool	Release();
+	bool	Init();
+	bool	Frame();
+	bool	Render();
+	bool	Release();
 };
-

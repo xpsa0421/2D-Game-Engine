@@ -13,4 +13,3 @@ public:
 	bool	Frame()					override;
 	void	UpdateVertexBuffer()	override;
 };
-

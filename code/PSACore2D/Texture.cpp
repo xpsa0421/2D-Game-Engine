@@ -38,9 +38,9 @@ HRESULT	Texture::Create(ID3D11Device* device, ID3D11DeviceContext* immediateCont
 	return result;
 }
 
-void Texture::Apply(ID3D11DeviceContext* immediateContext, UINT slot)
+void Texture::Apply(UINT slot)
 {
-	immediateContext->PSSetShaderResources(slot, 1, &_textureSRV);
+	_immediateContext->PSSetShaderResources(slot, 1, &_textureSRV);
 }
 
 bool Texture::Release()

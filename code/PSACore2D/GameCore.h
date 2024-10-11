@@ -15,8 +15,7 @@ public:
 	Timer	_gameTimer;
 	bool	_isGameRun = true;
 public:
-	IDXGISurface1*		_backBuffer;
-	
+	IDXGISurface1*	_backBuffer;
 public:
 	virtual bool	Init()		{ return true; }; 
 	virtual bool	Frame()		{ return true; }; 
@@ -32,4 +31,3 @@ private:
 public:
 	bool	Run() override;
 };
-

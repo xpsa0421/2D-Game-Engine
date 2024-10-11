@@ -12,7 +12,7 @@ bool Timer::Frame()
 {
 	DWORD currentTime = timeGetTime();
 	DWORD elapseTime = currentTime - _prevTime;
-	_elapseTimer = elapseTime / 1000.0f;
+	_elapseTimer = elapseTime / 1000.0f; // Milliseconds -> seconds
 	_gameTimer += _elapseTimer;
 	_prevTime = currentTime;
 	return true;

@@ -24,7 +24,7 @@ bool ScrollObject::Frame()
 	_vertices[3].t = { 1.0f + _scrollStep, 1.0f };
 
 	_immediateContext->UpdateSubresource(
-		_vertexBuffer, 0, nullptr, &_vertices.at(0), 0, 0);
+		_vertexBuffer, 0, nullptr, &_vertices.at(0), 0, 0); 
 
 	return true;
 }

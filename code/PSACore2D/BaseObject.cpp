@@ -144,23 +144,17 @@ bool BaseObject::Create(
 |	OBJECT POSITIONING AND SIZING                           |
  -----------------------------------------------------------*/
 
-void BaseObject::SetCameraPos(Vector2 cameraPos)
+void BaseObject::SetCamera(Camera* cam)
 {
-	_cameraSet = true;
-	_cameraPos = cameraPos;
+	_renderCam = cam;
 }
 
-void BaseObject::SetCameraSize(Vector2 cameraSize)
+void BaseObject::ScreenToCamera()
 {
-	_cameraSize = cameraSize;
-}
-
-void BaseObject::ScreenToCamera(Vector2 cameraPos, Vector2 cameraSize)
-{
-	_drawPos.x = (_collider.x1 - cameraPos.x) * (2.0f / cameraSize.x);
-	_drawPos.y = (_collider.y1 - cameraPos.y) * (2.0f / cameraSize.y) * -1.0f;
-	_drawSize.x = (_rectInit.w / cameraSize.x) * 2;
-	_drawSize.y = (_rectInit.h / cameraSize.y) * 2;
+	_drawPos.x = (_collider.x1 - _renderCam->_pos.x) * (2.0f / _renderCam->_size.x);
+	_drawPos.y = (_collider.y1 - _renderCam->_pos.y) * (2.0f / _renderCam->_size.y) * -1.0f;
+	_drawSize.x = (_rectInit.w / _renderCam->_size.x) * 2;
+	_drawSize.y = (_rectInit.h / _renderCam->_size.y) * 2;
 }
 
 void BaseObject::ScreenToNDC()
@@ -174,27 +168,9 @@ void BaseObject::ScreenToNDC()
 void BaseObject::SetPosition(Vector2 pos)
 {
 	_pos = pos;
-	_collider.Set(
-		pos.x,
-		pos.y,
-		_rectInit.w,
-		_rectInit.h
-	);
-	ScreenToNDC();
-	UpdateVertexBuffer();
-}
-
-void BaseObject::SetPosition(Vector2 pos, Vector2 cameraPos)
-{
-	_pos = pos;
-	_cameraPos = cameraPos;
-	_collider.Set(
-		pos.x,
-		pos.y,
-		_rectInit.w,
-		_rectInit.h
-	);
-	ScreenToCamera(cameraPos, _cameraSize);
+	_collider.Set(pos.x, pos.y, _rectInit.w, _rectInit.h);
+	if (_renderCam == nullptr) ScreenToNDC();
+	else ScreenToCamera();
 	UpdateVertexBuffer();
 }
 
@@ -202,20 +178,11 @@ void BaseObject::SetRect(Rect rect)
 {
 	_rectSet = true;
 	_rectInit = rect;
-	if (_texture == nullptr) return;
 
 	_rectUV.x1 = rect.x1 / _imageSize.x;
 	_rectUV.y1 = rect.y1 / _imageSize.y;
 	_rectUV.w = rect.w / _imageSize.x;
 	_rectUV.h = rect.h / _imageSize.y;
-}
-
-void BaseObject::SetColour(Vector4 colour)
-{
-	_vertices[0].c = colour;
-	_vertices[1].c = colour;
-	_vertices[2].c = colour;
-	_vertices[3].c = colour;
 }
 
 void BaseObject::UpdateVertexBuffer()
@@ -238,6 +205,16 @@ void BaseObject::UpdateVertexBuffer()
 		_vertexBuffer, NULL, nullptr, &_vertices.at(0), 0, 0);
 }
 
+void BaseObject::SetColour(Vector4 colour)
+{
+	if (!_rectSet) return;
+
+	_vertices[0].c = colour;
+	_vertices[1].c = colour;
+	_vertices[2].c = colour;
+	_vertices[3].c = colour;
+}
+
 
 /*----------------------------------------------------------
 |	OBJECT RENDERING		                                |
@@ -250,13 +227,14 @@ bool BaseObject::Init()
 
 bool BaseObject::Frame()
 {
-	if (_cameraSet)	SetPosition(_pos, _cameraPos);
+	if (_renderCam != nullptr)
+	{
+		ScreenToCamera();
+		UpdateVertexBuffer();
+	}
 	else
 	{
-		_immediateContext->UpdateSubresource(
-			_vertexBuffer, 0, nullptr,
-			&_vertices.at(0), 0, 0
-		);
+		_immediateContext->UpdateSubresource(_vertexBuffer, 0, nullptr, &_vertices.at(0), 0, 0);
 	}
 	return true;
 }
@@ -265,14 +243,14 @@ bool BaseObject::PreRender()
 {
 	UINT stride = sizeof(Vertex);
 	UINT offset = 0;
-	
+
 	_immediateContext->IASetVertexBuffers(0, 1, &_vertexBuffer, &stride, &offset);
 	_immediateContext->IASetIndexBuffer(_indexBuffer, DXGI_FORMAT_R32_UINT, offset);
 	_immediateContext->IASetInputLayout(_vertexLayout);
 	_immediateContext->VSSetShader(_shader->_vertexShader, NULL, 0);
 	_immediateContext->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	if (_texture != nullptr) 
+	if (_texture != nullptr)
 	{
 		_immediateContext->PSSetShader(_shader->_pixelShader, NULL, 0);
 		_immediateContext->PSSetShaderResources(0, 1, &(_texture->_textureSRV));
@@ -281,7 +259,7 @@ bool BaseObject::PreRender()
 	{
 		_immediateContext->PSSetShader(_shader->_pixelShaderNoTexture, NULL, 0);
 	}
-	
+
 	return true;
 }
 

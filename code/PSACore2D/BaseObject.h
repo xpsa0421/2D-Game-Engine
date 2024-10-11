@@ -2,6 +2,7 @@
 #include "TextureManager.h"
 #include "ShaderManager.h"
 #include "Collision2D.h"
+#include "Camera.h"
 
 struct Vertex
 {
@@ -25,14 +26,12 @@ public:
 	std::vector<DWORD>		_indices;
 public:
 	bool					_rectSet			= false;
-	bool					_cameraSet			= false;
+	Camera*					_renderCam			= nullptr;
 	Texture*				_maskTexture		= nullptr;
 	POINT					_imageSize;
 	Rect					_rectInit;
 	Rect					_rectUV;
 	Vector2					_pos;
-	Vector2					_cameraPos;
-	Vector2					_cameraSize;
 	Vector2					_drawPos;
 	Vector2					_drawSize;
 public:
@@ -49,13 +48,11 @@ public:
 	virtual bool		Create( ID3D11Device* device, ID3D11DeviceContext* immediateContext,
 						W_STR texFileName, W_STR shaderFileName	);
 public:
+	virtual void		SetCamera(Camera* cam);
+	virtual void		SetColour(Vector4 color);
 	virtual void		SetRect(Rect rect);
-	virtual void		SetColour(Vector4 colour);
 	virtual void		SetPosition(Vector2 pos);
-	virtual void		SetPosition(Vector2 pos, Vector2 cameraPos);
-	virtual void		SetCameraPos(Vector2 cameraPos);
-	virtual void		SetCameraSize(Vector2 cameraSize);
-	void				ScreenToCamera(Vector2 cameraPos, Vector2 cameraSize);
+	void				ScreenToCamera();
 	virtual void		ScreenToNDC();
 	virtual void		UpdateVertexBuffer();
 public:

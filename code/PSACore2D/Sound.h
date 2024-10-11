@@ -9,7 +9,6 @@
 class Sound
 {
 public:
-	FMOD::System*	_system		= nullptr;
 	FMOD::Sound*	_sound		= nullptr;
 	FMOD::Channel*	_channel	= nullptr;
 	W_STR			_name;
@@ -25,10 +24,7 @@ public:
 	void	VolumeDown(float amount = 0.1f);
 	void	SetLoop(bool isLooped);
 public:
-	virtual bool	Load(FMOD::System* system, W_STR fileName);
-	virtual bool	Init();
-	virtual bool	Frame();
-	virtual bool	Render();
-	virtual bool	Release();
+	bool	Load(W_STR fileName);
+	bool	Frame();
+	bool	Release();
 };
-

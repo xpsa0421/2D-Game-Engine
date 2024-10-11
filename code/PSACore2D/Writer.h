@@ -24,6 +24,4 @@ public:
 public:
 	bool	Set(IDXGISurface1* surface);
 	bool	Draw(float x, float y, std::wstring text, D2D1_COLOR_F color = D2D1::ColorF(D2D1::ColorF::White, 1.0f));
-
 };
-

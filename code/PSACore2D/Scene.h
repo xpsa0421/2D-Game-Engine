@@ -23,3 +23,4 @@ public:
 	virtual bool IsGameQuit() { return false; }
 	virtual void RestartScene() {};
 };
+

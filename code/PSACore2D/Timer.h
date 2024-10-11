@@ -15,5 +15,3 @@ public:
 	virtual bool	Render();
 	virtual bool	Release();
 };
-
-

@@ -29,7 +29,7 @@ extern float	g_secondPerFrame;
 extern Vector2	playerPos;
 
 #define GAME_START int APIENTRY wWinMain(HINSTANCE instance,HINSTANCE prevInstance, LPWSTR cmdLine, int cmdShow){
-#define GAME_WINDOW(s,x,y) Sample demo;demo.SetWindow(instance,L#s,x,y);demo.Run(); return 1;
+#define GAME_WINDOW(s,x,y) Application demo; demo.SetWindow(instance,L#s,x,y); demo.Run(); return 1;
 #define GAME_END    }
 #define GAME_RUN(s,x,y)  GAME_START  GAME_WINDOW(s,x,y)  GAME_END
 

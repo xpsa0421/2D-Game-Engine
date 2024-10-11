@@ -11,4 +11,3 @@ public:
 	virtual void	SetSpeed(float speed);
 	virtual void	SetDirection(Vector2 dir);
 };
-
